@@ -199,11 +199,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <div class="wrap">
       <div class="contact">
         <h2>Travaillons ensemble</h2>
-        <p class="lead">Un projet, une question, une offre d'alternance ? Écris-moi, je réponds sous quelques jours.</p>
+        <p class="lead">Un projet, une question, une proposition de collaboration ? Écris-moi, je réponds sous quelques jours.</p>
         <form id="form">
-          <label>Ton nom<input name="nom" required autocomplete="name"></label>
-          <label>Ton e-mail<input type="email" name="email" required autocomplete="email"></label>
-          <label>Ton message<textarea name="message" required></textarea></label>
+          <label>Tu t'appelles...<input name="nom" required autocomplete="name"></label>
+          <label>Je te contacte @<input type="email" name="email" required autocomplete="email"></label>
+          <label>Où en sommes-nous ?<textarea name="message" required></textarea></label>
           <button class="btn" type="submit">Envoyer le message</button>
         </form>
       </div>
@@ -214,7 +214,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <footer>
   <div class="wrap">
     <span>© <span id="year"></span> Inès Canalda</span>
-    <span><a href="https://www.linkedin.com/in/ines-canalda/">LinkedIn</a> · <a href="https://www.instagram.com/showinsss">Instagram</a> · <a href="mailto:ines.canalda@icloud.com">Mail</a></span>
+    <span><a href="https://www.linkedin.com/in/ines-canalda/">LinkedIn</a> · <a href="https://www.instagram.com/showinsss">Instagram</a>
   </div>
 </footer>
  
@@ -240,7 +240,7 @@ document.getElementById('form').addEventListener('submit',e=>{
   e.preventDefault();
   const d=new FormData(e.target);
   const body=encodeURIComponent(d.get('message')+'\n\n'+d.get('nom')+' ('+d.get('email')+')');
-  location.href='mailto:ton.email@exemple.fr?subject='+encodeURIComponent('Contact via le portfolio')+'&body='+body;
+  location.href='mailto:ines.canalda@icloud.com?subject='+encodeURIComponent('NOUVEAU MESSAGE depuis le gitfolio')+'&body='+body;
 });
  
 document.getElementById('year').textContent=new Date().getFullYear();
