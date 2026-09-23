@@ -1,11 +1,253 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello world</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inès Canalda – Portfolio</title>
+<meta name="description" content="Portfolio d'Inès Canalda : design UX, montage vidéo et motion design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<!--
+  COMMENT PERSONNALISER
+  1. Remplace tout ce qui est entre [crochets] par tes infos.
+  2. Couleurs : modifie les variables dans :root (et dans le bloc sombre).
+  3. Images : dans chaque projet, remplace <div class="thumb ..."> par
+     <img class="thumb" src="images/mon-projet.jpg" alt="Description">
+  4. Vidéo : remplace .reel par <video controls poster="..."><source src="reel.mp4"></video>
+     ou un <iframe> YouTube/Vimeo.
+  5. Héberge le dossier (GitHub Pages, Netlify, Vercel…) : le fichier est autonome.
+-->
+<style>
+:root{
+  --bg:#F3F1FA; --surface:#FFFFFF; --ink:#1F1D4A; --muted:#5E5C85;
+  --accent:#FF5A87; --accent-ink:#FFFFFF; --sun:#FFC83D; --line:#D9D5EE;
+  --r:18px;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#15143A; --surface:#1F1D4A; --ink:#F3F1FA; --muted:#A9A6D0; --line:#37356E;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15143A; --surface:#1F1D4A; --ink:#F3F1FA; --muted:#A9A6D0; --line:#37356E;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.65 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+ 
+/* Navigation */
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.logo{font:800 1.15rem var(--display);text-decoration:none}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;align-items:center}
+nav a{text-decoration:none;font-weight:600;font-size:.95rem}
+nav a:hover{color:var(--accent)}
+#theme{background:none;border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:6px 12px;font:600 .85rem var(--body);cursor:pointer}
+ 
+/* Hero */
+.hero{padding:88px 0 56px}
+.hero h1{font:800 clamp(2.8rem,9vw,6.6rem)/.95 var(--display);letter-spacing:-.03em;margin:0 0 28px;max-width:12ch}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--sun) 62% 92%,transparent 92%)}
+.hero p{max-width:52ch;color:var(--muted);font-size:1.2rem;margin:0 0 32px}
+.btn{display:inline-block;padding:14px 26px;border-radius:99px;background:var(--accent);color:var(--accent-ink);font-weight:600;text-decoration:none;border:0;cursor:pointer;font-family:var(--body);font-size:1rem}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:none;color:var(--ink);border:2px solid var(--ink);margin-left:8px}
+ 
+/* Showreel */
+.reel{aspect-ratio:16/9;border-radius:var(--r);background:linear-gradient(135deg,#7B5CFF,#FF5A87 60%,#FFC83D);display:grid;place-items:center;color:#fff;font:800 clamp(1.2rem,3vw,2rem) var(--display);text-align:center;padding:24px;margin-top:8px}
+ 
+section{padding:72px 0}
+h2{font:800 clamp(1.9rem,4vw,2.8rem)/1.1 var(--display);letter-spacing:-.02em;margin:0 0 12px}
+.lead{color:var(--muted);max-width:56ch;margin:0 0 32px}
+ 
+/* Projets */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.filters button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 18px;border-radius:99px;font:600 .95rem var(--body);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.project{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center;margin-bottom:64px}
+.project:nth-child(even) .thumb{order:2}
+.project[hidden]{display:none}
+.thumb{aspect-ratio:4/3;width:100%;object-fit:cover;border-radius:var(--r);display:block}
+.g1{background:linear-gradient(140deg,#7B5CFF,#B5A6FF)}
+.g2{background:linear-gradient(140deg,#FF5A87,#FFC83D)}
+.g3{background:linear-gradient(140deg,#1F1D4A,#4B47B5)}
+.project h3{font:800 1.7rem/1.15 var(--display);margin:0 0 6px}
+.tags{color:var(--muted);font-size:.95rem;margin:0 0 14px}
+.project p{margin:0 0 16px;max-width:46ch}
+.project a.more{font-weight:600;text-decoration-thickness:2px;text-underline-offset:4px}
+ 
+/* À propos */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.about ul{list-style:none;padding:0;margin:0}
+.about li{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px}
+.about li span:last-child{color:var(--muted);text-align:right}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.skills span{background:var(--surface);border:1px solid var(--line);padding:6px 14px;border-radius:99px;font-size:.92rem}
+ 
+/* Contact */
+.contact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,5vw,56px)}
+form{display:grid;gap:16px;max-width:560px}
+label{font-weight:600;display:grid;gap:6px}
+input,textarea{font:inherit;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+textarea{min-height:130px;resize:vertical}
+footer{padding:40px 0;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+ 
+@media (max-width:760px){
+  nav ul li:not(:last-child){display:none}
+  .project,.about{grid-template-columns:1fr;gap:20px}
+  .project:nth-child(even) .thumb{order:0}
+  .btn.ghost{margin:12px 0 0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
 <body>
-  <h1>This is me</h1>
-  <p>Life should be fun for everyone.</p>
+<header>
+  <div class="wrap">
+    <nav aria-label="Navigation principale">
+      <a class="logo" href="#top">[Prénom Nom]</a>
+      <ul>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#apropos">À propos</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button id="theme" type="button" aria-label="Changer de thème">Thème</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+ 
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <h1>Je conçois des interfaces et je les <span>mets en mouvement</span>.</h1>
+      <p>Je suis [Prénom], designer UX et monteuse vidéo / motion designer. J'aime les produits clairs, les images qui racontent quelque chose et les détails soignés.</p>
+      <a class="btn" href="#projets">Voir mes projets</a>
+      <a class="btn ghost" href="#contact">Me contacter</a>
+    </div>
+    <div class="reel" role="img" aria-label="Emplacement de la vidéo de présentation">Ta vidéo de présentation (showreel) ici</div>
+  </div>
+ 
+  <section id="projets">
+    <div class="wrap">
+      <h2>Projets</h2>
+      <p class="lead">Une sélection de travaux récents. Filtre par type pour trouver ce qui t'intéresse.</p>
+      <div class="filters" role="group" aria-label="Filtrer les projets">
+        <button type="button" data-filter="all" aria-pressed="true">Tous</button>
+        <button type="button" data-filter="ux" aria-pressed="false">Design UX</button>
+        <button type="button" data-filter="motion" aria-pressed="false">Motion design</button>
+        <button type="button" data-filter="video" aria-pressed="false">Montage vidéo</button>
+      </div>
+ 
+      <article class="project" data-cat="ux">
+        <div class="thumb g1" role="img" aria-label="Aperçu du projet Application [Nom]"></div>
+        <div>
+          <h3>Application [Nom du projet]</h3>
+          <p class="tags">Design UX · Recherche utilisateur · Prototype</p>
+          <p>Décris en deux phrases le problème à résoudre, ton rôle et le résultat obtenu (par exemple : « parcours d'inscription raccourci de 5 à 2 étapes »).</p>
+          <a class="more" href="#">Lire l'étude de cas</a>
+        </div>
+      </article>
+ 
+      <article class="project" data-cat="motion">
+        <div class="thumb g2" role="img" aria-label="Aperçu du projet Animation [Nom]"></div>
+        <div>
+          <h3>Animation [Nom du projet]</h3>
+          <p class="tags">Motion design · After Effects</p>
+          <p>Explique l'intention de l'animation, l'outil utilisé et la durée du projet. Ajoute un lien vers la vidéo.</p>
+          <a class="more" href="#">Voir l'animation</a>
+        </div>
+      </article>
+ 
+      <article class="project" data-cat="video">
+        <div class="thumb g3" role="img" aria-label="Aperçu du projet Montage [Nom]"></div>
+        <div>
+          <h3>Montage [Nom du projet]</h3>
+          <p class="tags">Montage vidéo · Étalonnage · Son</p>
+          <p>Précise le format (clip, reportage, réseaux sociaux), ce que tu as monté et le logiciel utilisé.</p>
+          <a class="more" href="#">Voir la vidéo</a>
+        </div>
+      </article>
+    </div>
+  </section>
+ 
+  <section id="apropos">
+    <div class="wrap about">
+      <div>
+        <h2>À propos</h2>
+        <p>Écris ici un court paragraphe : d'où tu viens, ce qui te motive, ta façon de travailler. Reste simple et sincère, on doit te reconnaître.</p>
+        <div class="skills" aria-label="Compétences">
+          <span>Figma</span><span>Recherche utilisateur</span><span>Wireframes</span>
+          <span>Premiere Pro</span><span>After Effects</span><span>DaVinci Resolve</span>
+        </div>
+      </div>
+      <ul aria-label="Parcours">
+        <li><span>[Année – aujourd'hui]</span><span>[Poste ou formation actuelle]</span></li>
+        <li><span>[Année – Année]</span><span>[Expérience précédente]</span></li>
+        <li><span>[Année]</span><span>[Diplôme ou certification]</span></li>
+      </ul>
+    </div>
+  </section>
+ 
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <h2>Travaillons ensemble</h2>
+        <p class="lead">Un projet, une question, une offre d'alternance ? Écris-moi, je réponds sous quelques jours.</p>
+        <form id="form">
+          <label>Ton nom<input name="nom" required autocomplete="name"></label>
+          <label>Ton e-mail<input type="email" name="email" required autocomplete="email"></label>
+          <label>Ton message<textarea name="message" required></textarea></label>
+          <button class="btn" type="submit">Envoyer le message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+ 
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> [Prénom Nom]</span>
+    <span><a href="#">LinkedIn</a> · <a href="#">Instagram</a> · <a href="#">Behance</a></span>
+  </div>
+</footer>
+ 
+<script>
+// Filtre des projets
+const buttons=document.querySelectorAll('.filters button');
+const projects=document.querySelectorAll('.project');
+buttons.forEach(b=>b.addEventListener('click',()=>{
+  buttons.forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const f=b.dataset.filter;
+  projects.forEach(p=>{p.hidden=!(f==='all'||p.dataset.cat===f)});
+}));
+ 
+// Thème clair / sombre
+const root=document.documentElement;
+document.getElementById('theme').addEventListener('click',()=>{
+  const dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#15143A';
+  root.dataset.theme=dark?'light':'dark';
+});
+ 
+// Formulaire : ouvre le client mail (remplace par Formspree/Netlify Forms pour un vrai envoi)
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=new FormData(e.target);
+  const body=encodeURIComponent(d.get('message')+'\n\n'+d.get('nom')+' ('+d.get('email')+')');
+  location.href='mailto:ton.email@exemple.fr?subject='+encodeURIComponent('Contact via le portfolio')+'&body='+body;
+});
+ 
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
 </body>
 </html>
+ 
